@@ -68,3 +68,17 @@ def generate_audio(req: TTSRequest):
         media_type="audio/mpeg",
         headers={"Content-Disposition": "inline; filename=output.mp3"}
     )
+
+
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
+
+# Serve built frontend from /app/frontend_dist
+app.mount("/", StaticFiles(directory="frontend_dist", html=True), name="frontend")
+
+# Optional: serve index.html on /
+@app.get("/")
+def read_index():
+    index_path = os.path.join("frontend_dist", "index.html")
+    return FileResponse(index_path)
