@@ -10,7 +10,7 @@ export default function AuthorVoiceApp() {
     setLoading(true);
     setAudioUrl(null);
 
-    const response = await fetch('http://localhost:8000/generate', {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/generate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text, author }),
@@ -42,7 +42,6 @@ export default function AuthorVoiceApp() {
       >
         <option value="">Choose an author</option>
         <option value="Rachel">Rachel</option>
-
       </select>
       <button
         className="w-full bg-blue-600 text-white p-2 rounded disabled:opacity-50"
