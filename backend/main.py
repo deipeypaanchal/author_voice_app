@@ -6,6 +6,8 @@ import requests
 import os
 from io import BytesIO
 from transformers import pipeline
+from dotenv import load_dotenv
+load_dotenv()
 
 app = FastAPI()
 
@@ -24,9 +26,7 @@ class TTSRequest(BaseModel):
     author: str
 
 author_voices = {
-    "maya-angelou": "VOICE_ID_1",
-    "hemingway": "VOICE_ID_2",
-    "neil-gaiman": "VOICE_ID_3"
+    "Rachel": "21m00Tcm4TlvDq8ikWAM"
 }
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
@@ -58,7 +58,10 @@ def generate_audio(req: TTSRequest):
     response = requests.post(f"{ELEVENLABS_API_URL}/{voice_id}/stream", headers=headers, json=data, stream=True)
 
     if response.status_code != 200:
-        raise HTTPException(status_code=500, detail="TTS generation failed")
+        print("ERROR from ElevenLabs:")
+        print("Status Code:", response.status_code)
+        print("Response Text:", response.text)
+        raise HTTPException(status_code=500, detail=f"TTS failed: {response.text}")
 
     return StreamingResponse(
         BytesIO(response.content),

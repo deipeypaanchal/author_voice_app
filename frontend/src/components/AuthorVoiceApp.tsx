@@ -41,9 +41,7 @@ export default function AuthorVoiceApp() {
         onChange={(e) => setAuthor(e.target.value)}
       >
         <option value="">Choose an author</option>
-        <option value="maya-angelou">Maya Angelou</option>
-        <option value="hemingway">Ernest Hemingway</option>
-        <option value="neil-gaiman">Neil Gaiman</option>
+        <option value="Rachel">Rachel</option>
       </select>
       <button
         className="w-full bg-blue-600 text-white p-2 rounded disabled:opacity-50"
